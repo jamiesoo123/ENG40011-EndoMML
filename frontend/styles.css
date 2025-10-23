@@ -1,14 +1,27 @@
-:root { --gap: 12px; --card: #f7f7f9; }
+:root { --gap: 12px; --card: #fff; --bg:#f7f8fa; --text:#222; --sub:#666; --primary:#2b7cff; }
 * { box-sizing: border-box; }
-body { font-family: system-ui, sans-serif; margin: 0; background: #fff; color: #222; }
-.container { max-width: 760px; margin: 24px auto; padding: 0 16px; }
-h1 { margin: 12px 0 16px; }
-.card { background: var(--card); border-radius: 10px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
-.question { margin-bottom: var(--gap); }
-label { display:block; margin-bottom: 6px; font-weight: 600; }
-.controls { display: flex; gap: 8px; flex-wrap: wrap; }
-.controls > * { margin-right: 8px; }
-button { border: 0; border-radius: 8px; padding: 10px 14px; cursor: pointer; background: #222; color: #fff; }
-.result strong { font-weight: 700; }
+body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
+.container { max-width: 860px; margin: 36px auto; padding: 0 16px; }
+h1 { margin: 8px 0 16px; }
+.card { background: var(--card); border-radius: 12px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,.05); margin-bottom: 16px; }
+.btn { display: inline-block; padding: 10px 16px; border-radius: 8px; border: 0; background: #333; color: #fff; text-decoration: none; cursor: pointer; }
+.btn.primary { background: var(--primary); }
+.btn.secondary { background: #777; }
+.btn + .btn { margin-left: 8px; }
+.spacer { height: 8px; }
+
+.question { margin-bottom: 16px; }
+.question label { display:block; font-weight: 600; margin-bottom: 6px; }
+.hint { font-size: 12px; color: var(--sub); }
 .inline { display: inline-block; margin-right: 12px; }
-.hint { font-size: 12px; opacity: .7; }
+.controls { display: flex; align-items: center; gap: 8px; }
+
+input[type="range"] { width: 260px; vertical-align: middle; }
+.progress { height: 8px; background: #e9edf3; border-radius: 999px; overflow: hidden; margin-bottom: 16px; }
+.progress .bar { height: 100%; width: 0%; background: var(--primary); transition: width .25s ease; }
+
+.wizard-nav { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+
+.result { font-size: 18px; text-align: center; }
+.page-header h2 { margin: 0 0 4px; }
+.page-header p { margin: 0 0 12px; color: var(--sub); }

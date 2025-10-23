@@ -2,28 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Endometriosis Symptom Survey (Local)</title>
+  <title>Endometriosis Predictor</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="/assets/styles.css" />
 </head>
 <body>
   <main class="container">
-    <h1>Endometriosis Symptom Survey</h1>
-
-    <form id="surveyForm" class="card"></form>
-
-    <div id="resultBox" class="result card" hidden></div>
+    <h1>Welcome</h1>
+    <div class="card">
+      <p>This tool collects symptom information and uses a trained ML model to estimate the likelihood of endometriosis.</p>
+      <a class="btn primary" href="/survey">Start Survey</a>
+    </div>
   </main>
-
-  <!-- JS modules -->
-  <script type="module">
-    import { buildForm } from '/assets/js/form.js'
-    buildForm({
-      formId: 'surveyForm',
-      resultId: 'resultBox',
-      questionsUrl: '/assets/../data/questions.json', // served from /data via app root
-      predictUrl: '/predict'
-    })
-  </script>
 </body>
 </html>
