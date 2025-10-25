@@ -7,6 +7,7 @@ function yesNoTo01(v) {
   const n = Number(v);
   return Number.isFinite(n) ? n : 0;
 }
+
 function scale10To01(v) {
   const n = Number(v);
   if (!Number.isFinite(n)) return 0;
@@ -105,6 +106,7 @@ function normalise(featuresRaw, typeByFeature) {
 }
 
 async function startWizard() {
+  // get all of the data from the html file and store it as a constant
   const form = document.getElementById('surveyForm');
   const header = document.getElementById('pageHeader');
   const container = document.getElementById('questions');
@@ -114,20 +116,30 @@ async function startWizard() {
   const btnSubmit = document.getElementById('btnSubmit');
   const out = document.getElementById('resultBox');
 
-  // 1) load spec (must exist at /data/questions.json)
+  // download button on the final page for the results pdf
+  const btnDownload = document.createElement('button');
+  btnDownload.textContent = 'Download PDF Report';
+  btnDownload.className = 'btn primary';
+  btnDownload.style.display = 'none';
+  btnDownload.addEventListener('click', generatePDF);
+  out.appendChild(btnDownload);
+
+  // 1) read in questions from '/data/questions.json'
   const spec = await fetchJSON('/data/questions.json');
   const pages = spec.pages || [{ id: 'one', title: spec.title || 'Survey', questions: spec.questions || [] }];
   const typeByFeature = buildTypeMap(pages);
 
-  // 2) state
+  // 2) page state
   let pageIdx = 0;
-  const answers = {};
+  const answers = {}; // store user answers
 
+  // bar at the top with % of completion
   function updateProgress() {
     const pct = Math.round(((pageIdx + 1) / pages.length) * 100);
     bar.style.width = pct + '%';
   }
 
+  // clear container and then add current page questions, update bar and show nav buttons
   function renderPage() {
     container.innerHTML = '';
     const page = pages[pageIdx];
@@ -162,6 +174,40 @@ async function startWizard() {
     return { ok: true };
   }
 
+  function generatePDF() {
+    const data = sessionStorage.getItem('endo_result'); 
+    if (!data) { 
+      alert('No survey result found'); 
+      return; 
+    }
+
+    const { prob1, pred, answers } = JSON.parse(data);
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF;
+
+    doc.setFontSize(16);
+    doc.text("Endometriosis Symptom Survey", 10, 10)
+
+    doc.setFontSize(12);
+    doc.text(`Predicted Probability: ${(prob1 * 100).toFixed(1)}%`, 10, 20);
+    doc.text(`Model Decision: ${pred === 1 ? 'Possible Endometriosis' : 'Unlikely Endometriosis'}`, 10, 28);
+
+    doc.setFontSize(14);
+    doc.text('Patient Responses', 10, 38);
+
+    let y = 46;
+    for (const [q,a] of Object.entries(answers)) {
+      doc.text(`${q}: ${a}`, 10, y);
+      y += 8;
+
+      if (y > 280) {
+        doc.addPage();
+        y = 10;
+      }
+    }
+    doc.save('Endometriosis_Survey.pdf');
+  }
+
   btnBack.addEventListener('click', () => {
     readCurrentPageInputs();
     if (pageIdx > 0) { pageIdx--; renderPage(); }
@@ -184,6 +230,8 @@ async function startWizard() {
 
     out.hidden = false;
     out.textContent = 'Loading…';
+
+    // try to send the answer data to the model
     try {
       const res = await fetch('/predict', {
         method: 'POST',
@@ -199,9 +247,9 @@ async function startWizard() {
         <div><strong>Predicted Label:</strong> ${json.pred}</div>
       `;
 
-      // optional redirect
-      sessionStorage.setItem('endo_result', JSON.stringify(json));
-      // window.location.href = '/result';
+      sessionStorage.setItem('endo_result', JSON.stringify({ ...json, answers })); // stores the answers and pred/% in sessionData
+      
+      btnDownload.style.display = 'inline-block'; // only appear once the submit button has been pressed
     } catch (err) {
       out.innerHTML = `<span style="color:#b00">Error: ${err.message}</span>`;
     }
