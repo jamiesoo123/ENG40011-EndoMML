@@ -1,32 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Symptom Survey</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="/assets/styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Endometriosis Survey</title>
+  <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
   <main class="container">
-    <h1>Symptom Survey</h1>
+    <h1>Endometriosis Symptom Survey</h1>
 
-    <div id="progress" class="progress"><div class="bar" id="progressBar"></div></div>
+    <div class="progress"><div id="progressBar" class="bar"></div></div>
 
     <form id="surveyForm" class="card">
       <div id="pageHeader" class="page-header"></div>
       <div id="questions"></div>
 
       <div class="wizard-nav">
-        <button type="button" id="btnBack" class="btn secondary">Back</button>
-        <button type="button" id="btnNext" class="btn">Next</button>
-        <button type="submit" id="btnSubmit" class="btn primary" hidden>Submit</button>
+        <button type="button" id="btnBack"  class="btn secondary">Back</button>
+        <button type="button" id="btnNext"  class="btn">Next</button>
+        <button type="submit" id="btnSubmit" class="btn primary" style="display:none">Submit</button>
       </div>
     </form>
 
     <div id="resultBox" class="result card" hidden></div>
   </main>
 
-  <!-- IMPORTANT: only this script; remove any old form.js/script includes -->
-  <script type="module" src="/assets/js/wizard.js?v=2"></script>
+  <!-- IMPORTANT: correct path (single 'w') -->
+  <script type="module" src="/static/js/wizard.js?v=2"></script>
 </body>
 </html>
