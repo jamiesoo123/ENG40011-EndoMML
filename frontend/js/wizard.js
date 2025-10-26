@@ -124,16 +124,16 @@ async function startWizard() {
   btnDownload.addEventListener('click', generatePDF);
   out.appendChild(btnDownload);
 
-  // 1) read in questions from '/data/questions.json'
-  const spec = await fetchJSON('/data/questions.json');
+  // bar at the top with % of completion
+  // 1) load spec (must exist at /data/questions.json)
+  const spec = await fetch('/data/questions.json', { cache: 'no-store' }).then(r => r.json());
   const pages = spec.pages || [{ id: 'one', title: spec.title || 'Survey', questions: spec.questions || [] }];
   const typeByFeature = buildTypeMap(pages);
 
-  // 2) page state
+  // 2) state
   let pageIdx = 0;
-  const answers = {}; // store user answers
+  const answers = {};
 
-  // bar at the top with % of completion
   function updateProgress() {
     const pct = Math.round(((pageIdx + 1) / pages.length) * 100);
     bar.style.width = pct + '%';
@@ -150,9 +150,10 @@ async function startWizard() {
       container.appendChild(node);
     });
 
-    btnBack.hidden = pageIdx === 0;
-    btnNext.hidden = pageIdx === pages.length - 1;
-    btnSubmit.hidden = !(pageIdx === pages.length - 1);
+    btnBack.style.display  = (pageIdx === 0) ? 'none' : '';
+    btnNext.style.display  = (pageIdx === pages.length - 1) ? 'none' : '';
+    btnSubmit.style.display = (pageIdx === pages.length - 1) ? '' : 'none';
+
     updateProgress();
   }
 
@@ -197,8 +198,11 @@ async function startWizard() {
 
     let y = 46;
     for (const [q,a] of Object.entries(answers)) {
-      doc.text(`${q}: ${a}`, 10, y);
-      y += 8;
+      const text = `${q}: ${a}`;
+      const split = doc.splitTextToSize(text, 180);
+      
+      doc.text(split, 10, y);
+      y += split.length * 8;
 
       if (y > 280) {
         doc.addPage();
@@ -217,30 +221,71 @@ async function startWizard() {
     readCurrentPageInputs();
     const v = validateCurrentPage();
     if (!v.ok) { alert(v.message); return; }
-    if (pageIdx < pages.length - 1) { pageIdx++; renderPage(); }
+  
+    const page = pages[pageIdx];
+    const firstQ = page.questions[0];
+    const answer = answers[firstQ.feature];
+  
+    // if "No" and next page is only for rating, skip it
+    if (firstQ.type === "radio" && answer && answer.toLowerCase() === "no" && firstQ.next_if_yes) {
+      // find the index of the page after the "next_if_yes"
+      const nextPageIdx = pages.findIndex(p => p.id === firstQ.next_if_yes);
+      if (nextPageIdx !== -1 && nextPageIdx + 1 < pages.length) {
+        pageIdx = nextPageIdx + 1; // skip the severity page
+        renderPage();
+        return;
+      }
+    }
+  
+    // if "Yes" and we have next_if_yes go there directly
+    if (firstQ.type === "radio" && answer && answer.toLowerCase() === "yes" && firstQ.next_if_yes) {
+      const nextPageIdx = pages.findIndex(p => p.id === firstQ.next_if_yes);
+      if (nextPageIdx !== -1) {
+        pageIdx = nextPageIdx;
+        renderPage();
+        return;
+      }
+    }
+  
+    // otherwise normal next
+    if (pageIdx < pages.length - 1) {
+      pageIdx++;
+      renderPage();
+    }
   });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     readCurrentPageInputs();
-    const v = validateCurrentPage();
-    if (!v.ok) { alert(v.message); return; }
-
+  
     const features = normalise(answers, typeByFeature);
-
+  
     out.hidden = false;
     out.textContent = 'Loading…';
-
-    // try to send the answer data to the model
+  
     try {
+      console.log('[wizard] POST /predict', features);
       const res = await fetch('/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ features })
       });
-      if (!res.ok) throw new Error(`API error ${res.status}`);
+  
+      if (!res.ok) {
+        const txt = await res.text().catch(() => '');
+        console.error('[wizard] /predict failed', res.status, txt);
+        out.innerHTML = `<span style="color:#b00">API error ${res.status}</span>`;
+        return;
+      }
+  
       const json = await res.json();
-
+      console.log('[wizard] /predict ok', json);
+  
+      // Save for the results page
+      sessionStorage.setItem('endo_result', JSON.stringify(json));
+      sessionStorage.setItem('endo_features', JSON.stringify(features));
+  
+      // Optional inline flash
       const pct = (json.prob1 * 100).toFixed(1);
       out.innerHTML = `
         <div><strong>Predicted Probability:</strong> ${pct}%</div>
@@ -250,11 +295,29 @@ async function startWizard() {
       sessionStorage.setItem('endo_result', JSON.stringify({ ...json, answers })); // stores the answers and pred/% in sessionData
       
       btnDownload.style.display = 'inline-block'; // only appear once the submit button has been pressed
+  
+      // Strong redirect
+      /* removing redirect for pfd download
+      window.location.replace('/result');
+      // Failsafe (in case of popup blockers or odd environments)
+      setTimeout(() => { if (location.pathname !== '/result') location.href = '/result'; }, 100);
+      */
+  
     } catch (err) {
+      console.error('[wizard] submit error', err);
       out.innerHTML = `<span style="color:#b00">Error: ${err.message}</span>`;
     }
   });
 
+  form.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // stop form submission
+      // emulate "Next" button click if it's visible
+      if (!btnNext.hidden) {
+        btnNext.click();
+      }
+    }
+  });
   renderPage();
 }
 

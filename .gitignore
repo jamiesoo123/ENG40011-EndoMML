@@ -1,0 +1,12 @@
+# Ignore virtual environment directories
+venv/
+.env/
+env/
+__pycache__/
+*.pyc
+
+# Ignore other common build artifacts
+*.pyo
+*.pyd
+*.egg-info/
+*.log

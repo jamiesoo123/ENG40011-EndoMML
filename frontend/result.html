@@ -1,20 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Your Prediction</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="/assets/styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prediction Result</title>
+  <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
   <main class="container">
-    <h1>Your Prediction</h1>
-    <div id="results" class="card">Loading…</div>
-    <div class="spacer"></div>
-    <a class="btn" href="/survey">Retake Survey</a>
-    <a class="btn secondary" href="/">Home</a>
+    <h1>Prediction Results</h1>
+
+    <!-- Prediction info -->
+    <div id="prediction" class="card">Loading result...</div>
+
+    <!-- SHAP bar chart -->
+    <div id="shap-bars" class="card" style="margin-top: 20px;">
+      <h2>Model Explainability (SHAP)</h2>
+      <p>Loading SHAP summary...</p>
+    </div>
+
+    <div style="margin-top: 20px; text-align: center;">
+      <a href="/survey" class="btn">Take Survey Again</a>
+    </div>
   </main>
 
-  <script type="module" src="/assets/js/result.js"></script>
+  <script type="module" src="/static/js/result.js?v=3"></script>
 </body>
 </html>

@@ -25,3 +25,80 @@ input[type="range"] { width: 260px; vertical-align: middle; }
 .result { font-size: 18px; text-align: center; }
 .page-header h2 { margin: 0 0 4px; }
 .page-header p { margin: 0 0 12px; color: var(--sub); }
+
+/* === RESULTS PAGE STYLING === */
+.result-container {
+    max-width: 860px;
+    margin: 36px auto;
+    padding: 0 16px;
+  }
+  
+  .result-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  
+  .result-header h1 {
+    font-size: 28px;
+    margin: 0 0 8px;
+  }
+  
+  .result-header p {
+    color: var(--sub);
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  .result-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    margin-bottom: 16px;
+  }
+  
+  .result-card h2 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+  
+  #prediction {
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: center;
+  }
+  
+  /* SHAP Bars */
+  .shap-bars {
+    margin-top: 16px;
+  }
+  .shap-bar {
+    margin: 8px 0;
+  }
+  .shap-bar-label {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .shap-bar-wrap {
+    background: #eee;
+    height: 10px;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .shap-bar-fill {
+    height: 100%;
+    transition: width .3s ease;
+  }
+  .shap-bar-fill.positive {
+    background: var(--primary);
+  }
+  .shap-bar-fill.negative {
+    background: #ff8a00;
+  }
+  
+  /* Back Button */
+  .actions {
+    text-align: center;
+    margin-top: 24px;
+  }
+  

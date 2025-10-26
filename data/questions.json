@@ -1,88 +1,121 @@
 {
   "title": "Endometriosis Symptom Survey",
   "pages": [
-    {
-      "id": "pain_menses",
-      "title": "Pain & Menstruation",
-      "description": "Rate pain and cycle-related symptoms.",
-      "questions": [
-        { "id": 1,  "feature": "PelvicPain", "text": "Pelvic pain (rate 1–10)", "type": "scale10" },
-        { "id": 2,  "feature": "MenstrualPainDysmenorrhea", "text": "Menstrual pain/dysmenorrhea (rate 1–10)", "type": "scale10" },
-        { "id": 3,  "feature": "Cramping", "text": "Cramping (rate 1–10)", "type": "scale10" },
-        { "id": 4,  "feature": "AbdominalPainOrPressure", "text": "Abdominal pain or pressure (rate 1–10)", "type": "scale10" },
-        { "id": 5,  "feature": "HeavyMenstrualBleeding", "text": "Heavy menstrual bleeding?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 6,  "feature": "IrregularOrMissedPeriods", "text": "Irregular or missed periods?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 7,  "feature": "MenstrualClots", "text": "Blood clots during menstruation?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 8,  "feature": "LongMenstruation", "text": "Long menstruation (>7 days)?", "type": "radio", "options": ["No","Yes"] }
-      ]
-    },
-    {
-      "id": "sexual_pelvic",
-      "title": "Sexual & Pelvic Pain",
-      "questions": [
-        { "id": 9,  "feature": "PainfDuringSexDyspareunia", "text": "Pain during sex (rate 1–10)", "type": "scale10" },
-        { "id": 10, "feature": "PainAfterIntercourse", "text": "Pain after intercourse (rate 1–10)", "type": "scale10" },
-        { "id": 11, "feature": "VaginalPainOrPressure", "text": "Vaginal pain or pressure (rate 1–10)", "type": "scale10" },
-        { "id": 12, "feature": "AbdominalCrampsDuringSex", "text": "Abdominal cramps during sex (rate 1–10)", "type": "scale10" },
-        { "id": 13, "feature": "PainfulOvulation", "text": "Painful ovulation (rate 1–10)", "type": "scale10" },
-        { "id": 14, "feature": "BackPain", "text": "Back pain (rate 1–10)", "type": "scale10" },
-        { "id": 15, "feature": "HipPain", "text": "Hip pain (rate 1–10)", "type": "scale10" },
-        { "id": 16, "feature": "SharpOrStabbingPain", "text": "Sharp or stabbing pain (rate 1–10)", "type": "scale10" }
-      ]
-    },
-    {
-      "id": "gi_urinary",
-      "title": "Gastrointestinal & Urinary",
-      "questions": [
-        { "id": 17, "feature": "DigestiveProblems", "text": "Digestive problems (bloating/pain/irregularity)?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 18, "feature": "Bloating", "text": "Bloating (rate 1–10)", "type": "scale10" },
-        { "id": 19, "feature": "IBSLikeSymptoms", "text": "IBS-like symptoms (alternating constipation/diarrhea)?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 20, "feature": "ChronicDiarrhea", "text": "Chronic diarrhea?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 21, "feature": "ChronicConstipation", "text": "Chronic constipation?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 22, "feature": "PainfulBowelMovements", "text": "Painful bowel movements?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 23, "feature": "PainfulUrination", "text": "Painful urination?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 24, "feature": "Nausea", "text": "Nausea?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 25, "feature": "ChronicVomiting", "text": "Frequent or chronic vomiting?", "type": "radio", "options": ["No","Yes"] }
-      ]
-    },
-    {
-      "id": "systemic_hormonal",
-      "title": "Systemic & Hormonal",
-      "questions": [
-        { "id": 26, "feature": "ChronicFatigue", "text": "Chronic fatigue (rate 1–10)", "type": "scale10" },
-        { "id": 27, "feature": "DecreasedEnergyOrExhaustion", "text": "Decreased energy / exhaustion?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 28, "feature": "HormonalProblems", "text": "Hormonal problems/imbalance?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 29, "feature": "MoodSwings", "text": "Mood swings?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 30, "feature": "Depression", "text": "Depression or low mood?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 31, "feature": "Fever", "text": "Occasional low-grade fever?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 32, "feature": "FeelingSick", "text": "Frequently feel sick/unwell?", "type": "radio", "options": ["No","Yes"] }
-      ]
-    },
-    {
-      "id": "neuro_general",
-      "title": "Neurological & General",
-      "questions": [
-        { "id": 33, "feature": "Headaches", "text": "Headaches (rate 1–10)", "type": "scale10" },
-        { "id": 34, "feature": "Migraines", "text": "Migraines (rate 1–10)", "type": "scale10" },
-        { "id": 35, "feature": "Dizziness", "text": "Dizziness or lightheadedness?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 36, "feature": "SyncopeFaintingPassingOut", "text": "Syncope/fainting/passing out?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 37, "feature": "InsomniaOrSleeplessness", "text": "Insomnia or poor sleep?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 38, "feature": "LossOfAppetite", "text": "Loss of appetite?", "type": "radio", "options": ["No","Yes"] }
-      ]
-    },
-    {
-      "id": "reproductive_other",
-      "title": "Reproductive & Other Clinical",
-      "questions": [
-        { "id": 39, "feature": "Infertility", "text": "Difficulty conceiving (infertility)?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 40, "feature": "FertilityIssues", "text": "Any fertility-related issues/concerns?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 41, "feature": "OvarianCysts", "text": "Diagnosed ovarian cysts?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 42, "feature": "AnaemiaIronDeficiency", "text": "Anaemia / iron deficiency diagnosed?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 43, "feature": "AcneOrPimples", "text": "Acne or pimples?", "type": "radio", "options": ["No","Yes"] },
-        { "id": 44, "feature": "StomachCramping", "text": "Stomach cramping (rate 1–10)", "type": "scale10" },
-        { "id": 45, "feature": "LegPain", "text": "Leg pain (rate 1–10)", "type": "scale10" },
-        { "id": 46, "feature": "PainOrChronicPain", "text": "General chronic pain (rate 1–10)", "type": "scale10" }
-      ]
-    }
+    { "id": "pelvic_pain_q1", "title": "Pelvic Pain", "questions": [ { "id": 1, "feature": "PelvicPain", "text": "Do you experience pelvic pain?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "pelvic_pain_q2" } ] },
+    { "id": "pelvic_pain_q2", "title": "Pelvic Pain Severity", "questions": [ { "id": 2, "feature": "PelvicPain", "text": "Rate your pelvic pain (1–10)", "type": "scale10" } ] },
+
+    { "id": "menstrual_pain_q1", "title": "Menstrual Pain", "questions": [ { "id": 3, "feature": "MenstrualPainDysmenorrhea", "text": "Do you experience pain during menstruation (dysmenorrhea)?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "menstrual_pain_q2" } ] },
+    { "id": "menstrual_pain_q2", "title": "Menstrual Pain Severity", "questions": [ { "id": 4, "feature": "MenstrualPainDysmenorrhea", "text": "Rate your menstrual pain (1–10)", "type": "scale10" } ] },
+
+    { "id": "pain_sex_q1", "title": "Pain During Sex", "questions": [ { "id": 5, "feature": "PainfDuringSexDyspareunia", "text": "Do you experience pain during sex (dyspareunia)?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "pain_sex_q2" } ] },
+    { "id": "pain_sex_q2", "title": "Pain During Sex Severity", "questions": [ { "id": 6, "feature": "PainfDuringSexDyspareunia", "text": "Rate your pain during sex (1–10)", "type": "scale10" } ] },
+
+    { "id": "abdominal_pain_q1", "title": "Abdominal Pain/Pressure", "questions": [ { "id": 7, "feature": "AbdominalPainOrPressure", "text": "Do you experience abdominal pain or pressure?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "abdominal_pain_q2" } ] },
+    { "id": "abdominal_pain_q2", "title": "Abdominal Pain Severity", "questions": [ { "id": 8, "feature": "AbdominalPainOrPressure", "text": "Rate your abdominal pain/pressure (1–10)", "type": "scale10" } ] },
+
+    { "id": "back_pain_q1", "title": "Back Pain", "questions": [ { "id": 9, "feature": "BackPain", "text": "Do you experience back pain?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "back_pain_q2" } ] },
+    { "id": "back_pain_q2", "title": "Back Pain Severity", "questions": [ { "id": 10, "feature": "BackPain", "text": "Rate your back pain (1–10)", "type": "scale10" } ] },
+
+    { "id": "cramping_q1", "title": "Cramping", "questions": [ { "id": 11, "feature": "Cramping", "text": "Do you experience cramping (outside of rating pages below)?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "cramping_q2" } ] },
+    { "id": "cramping_q2", "title": "Cramping Severity", "questions": [ { "id": 12, "feature": "Cramping", "text": "Rate your cramping (1–10)", "type": "scale10" } ] },
+
+    { "id": "bowel_pain_q1", "title": "Painful Bowel Movements", "questions": [ { "id": 13, "feature": "PainfulBowelMovements", "text": "Do you experience painful bowel movements?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "bowel_pain_q2" } ] },
+    { "id": "bowel_pain_q2", "title": "Bowel Pain Severity", "questions": [ { "id": 14, "feature": "PainfulBowelMovements", "text": "Rate your bowel pain (1–10)", "type": "scale10" } ] },
+
+    { "id": "nausea_q1", "title": "Nausea", "questions": [ { "id": 15, "feature": "Nausea", "text": "Do you often feel nauseous?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "nausea_q2" } ] },
+    { "id": "nausea_q2", "title": "Nausea Severity", "questions": [ { "id": 16, "feature": "Nausea", "text": "Rate your nausea (1–10)", "type": "scale10" } ] },
+
+    { "id": "menstrual_clots_q1", "title": "Menstrual Clots", "questions": [ { "id": 17, "feature": "MenstrualClots", "text": "Do you pass large menstrual clots?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "infertility_q1", "title": "Infertility", "questions": [ { "id": 18, "feature": "Infertility", "text": "Have you had difficulty conceiving (infertility)?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "pain_chronic_q1", "title": "Chronic / General Pain", "questions": [ { "id": 19, "feature": "PainOrChronicPain", "text": "Do you experience chronic or persistent pain?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "pain_chronic_q2" } ] },
+    { "id": "pain_chronic_q2", "title": "Chronic Pain Severity", "questions": [ { "id": 20, "feature": "PainOrChronicPain", "text": "Rate your chronic/general pain (1–10)", "type": "scale10" } ] },
+
+    { "id": "diarrhea_q1", "title": "Chronic Diarrhea", "questions": [ { "id": 21, "feature": "ChronicDiarrhea", "text": "Do you experience chronic diarrhea?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "long_menstruation_q1", "title": "Long Menstruation", "questions": [ { "id": 22, "feature": "LongMenstruation", "text": "Does your menstruation last longer than 7 days?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "constipation_q1", "title": "Chronic Constipation", "questions": [ { "id": 23, "feature": "ChronicConstipation", "text": "Do you experience chronic constipation?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "vomiting_q1", "title": "Chronic Vomiting", "questions": [ { "id": 24, "feature": "ChronicVomiting", "text": "Do you experience frequent or chronic vomiting?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "fatigue_q1", "title": "Chronic Fatigue", "questions": [ { "id": 25, "feature": "ChronicFatigue", "text": "Do you frequently feel fatigued?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "fatigue_q2" } ] },
+    { "id": "fatigue_q2", "title": "Fatigue Severity", "questions": [ { "id": 26, "feature": "ChronicFatigue", "text": "Rate your fatigue level (1–10)", "type": "scale10" } ] },
+
+    { "id": "painful_ovulation_q1", "title": "Painful Ovulation", "questions": [ { "id": 27, "feature": "PainfulOvulation", "text": "Do you experience painful ovulation?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "painful_ovulation_q2" } ] },
+    { "id": "painful_ovulation_q2", "title": "Ovulation Pain Severity", "questions": [ { "id": 28, "feature": "PainfulOvulation", "text": "Rate your ovulation pain (1–10)", "type": "scale10" } ] },
+
+    { "id": "stomach_cramping_q1", "title": "Stomach Cramping", "questions": [ { "id": 29, "feature": "StomachCramping", "text": "Do you experience stomach cramping?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "stomach_cramping_q2" } ] },
+    { "id": "stomach_cramping_q2", "title": "Stomach Cramping Severity", "questions": [ { "id": 30, "feature": "StomachCramping", "text": "Rate your stomach cramping (1–10)", "type": "scale10" } ] },
+
+    { "id": "migraines_q1", "title": "Migraines", "questions": [ { "id": 31, "feature": "Migraines", "text": "Do you experience migraines?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "migraines_q2" } ] },
+    { "id": "migraines_q2", "title": "Migraine Severity", "questions": [ { "id": 32, "feature": "Migraines", "text": "Rate your migraines (1–10)", "type": "scale10" } ] },
+
+    { "id": "leg_pain_q1", "title": "Leg Pain", "questions": [ { "id": 33, "feature": "LegPain", "text": "Do you experience leg pain?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "leg_pain_q2" } ] },
+    { "id": "leg_pain_q2", "title": "Leg Pain Severity", "questions": [ { "id": 34, "feature": "LegPain", "text": "Rate your leg pain (1–10)", "type": "scale10" } ] },
+
+    { "id": "syncope_q1", "title": "Syncope / Fainting", "questions": [ { "id": 35, "feature": "SyncopeFaintingPassingOut", "text": "Have you experienced syncope/fainting/passing out?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "mood_swings_q1", "title": "Mood Swings", "questions": [ { "id": 36, "feature": "MoodSwings", "text": "Do you experience mood swings?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "depression_q1", "title": "Depression / Low Mood", "questions": [ { "id": 37, "feature": "Depression", "text": "Do you experience depression or low mood?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "fertility_issues_q1", "title": "Fertility Issues", "questions": [ { "id": 38, "feature": "FertilityIssues", "text": "Do you have fertility-related issues or concerns?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "ovarian_cysts_q1", "title": "Ovarian Cysts", "questions": [ { "id": 39, "feature": "OvarianCysts", "text": "Have you been diagnosed with ovarian cysts?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "painful_urination_q1", "title": "Painful Urination", "questions": [ { "id": 40, "feature": "PainfulUrination", "text": "Do you experience painful urination?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "headaches_q1", "title": "Headaches", "questions": [ { "id": 41, "feature": "Headaches", "text": "Do you experience headaches?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "headaches_q2" } ] },
+    { "id": "headaches_q2", "title": "Headache Severity", "questions": [ { "id": 42, "feature": "Headaches", "text": "Rate your headache severity (1–10)", "type": "scale10" } ] },
+
+    { "id": "pain_after_intercourse_q1", "title": "Pain After Intercourse", "questions": [ { "id": 43, "feature": "PainAfterIntercourse", "text": "Do you experience pain after intercourse?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "pain_after_intercourse_q2" } ] },
+    { "id": "pain_after_intercourse_q2", "title": "Pain After Intercourse Severity", "questions": [ { "id": 44, "feature": "PainAfterIntercourse", "text": "Rate your pain after intercourse (1–10)", "type": "scale10" } ] },
+
+    { "id": "digestive_q1", "title": "Digestive Problems", "questions": [ { "id": 45, "feature": "DigestiveProblems", "text": "Do you experience digestive issues (pain/irregularity)?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "digestive_q2" } ] },
+    { "id": "digestive_q2", "title": "Digestive Problem Severity", "questions": [ { "id": 46, "feature": "DigestiveProblems", "text": "Rate your digestive discomfort (1–10)", "type": "scale10" } ] },
+
+    { "id": "ibs_q1", "title": "IBS-like Symptoms", "questions": [ { "id": 47, "feature": "IBSLikeSymptoms", "text": "Do you experience IBS-like symptoms (alternating constipation/diarrhea)?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "anemia_q1", "title": "Anaemia / Iron Deficiency", "questions": [ { "id": 48, "feature": "AnaemiaIronDeficiency", "text": "Have you been diagnosed with anaemia or iron deficiency?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "hip_pain_q1", "title": "Hip Pain", "questions": [ { "id": 49, "feature": "HipPain", "text": "Do you experience hip pain?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "hip_pain_q2" } ] },
+    { "id": "hip_pain_q2", "title": "Hip Pain Severity", "questions": [ { "id": 50, "feature": "HipPain", "text": "Rate your hip pain (1–10)", "type": "scale10" } ] },
+
+    { "id": "vaginal_pain_q1", "title": "Vaginal Pain/Pressure", "questions": [ { "id": 51, "feature": "VaginalPainOrPressure", "text": "Do you experience vaginal pain or pressure?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "vaginal_pain_q2" } ] },
+    { "id": "vaginal_pain_q2", "title": "Vaginal Pain Severity", "questions": [ { "id": 52, "feature": "VaginalPainOrPressure", "text": "Rate your vaginal pain/pressure (1–10)", "type": "scale10" } ] },
+
+    { "id": "sharp_pain_q1", "title": "Sharp/Stabbing Pain", "questions": [ { "id": 53, "feature": "SharpOrStabbingPain", "text": "Do you experience sharp or stabbing pain?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "sharp_pain_q2" } ] },
+    { "id": "sharp_pain_q2", "title": "Sharp/Stabbing Pain Severity", "questions": [ { "id": 54, "feature": "SharpOrStabbingPain", "text": "Rate your sharp/stabbing pain (1–10)", "type": "scale10" } ] },
+
+    { "id": "anxiety_q1", "title": "Anxiety", "questions": [ { "id": 55, "feature": "Anxiety", "text": "Do you experience anxiety?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "dizziness_q1", "title": "Dizziness", "questions": [ { "id": 56, "feature": "Dizziness", "text": "Do you experience dizziness or lightheadedness?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "fever_q1", "title": "Fever", "questions": [ { "id": 57, "feature": "Fever", "text": "Do you experience occasional low-grade fever?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "hormonal_q1", "title": "Hormonal Problems", "questions": [ { "id": 58, "feature": "HormonalProblems", "text": "Have you experienced symptoms of hormonal imbalance (e.g., acne, mood swings)?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "hormonal_q2" } ] },
+    { "id": "hormonal_q2", "title": "Hormonal Symptom Severity", "questions": [ { "id": 59, "feature": "HormonalProblems", "text": "Rate the severity of hormonal symptoms (1–10)", "type": "scale10" } ] },
+
+    { "id": "bloating_q1", "title": "Bloating", "questions": [ { "id": 60, "feature": "Bloating", "text": "Do you experience bloating?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "bloating_q2" } ] },
+    { "id": "bloating_q2", "title": "Bloating Severity", "questions": [ { "id": 61, "feature": "Bloating", "text": "Rate your bloating severity (1–10)", "type": "scale10" } ] },
+
+    { "id": "feeling_sick_q1", "title": "Feeling Sick/Unwell", "questions": [ { "id": 62, "feature": "FeelingSick", "text": "Do you frequently feel sick or unwell?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "energy_exhaustion_q1", "title": "Decreased Energy / Exhaustion", "questions": [ { "id": 63, "feature": "DecreasedEnergyOrExhaustion", "text": "Have you noticed decreased energy or exhaustion?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "ab_cramps_sex_q1", "title": "Abdominal Cramps During Sex", "questions": [ { "id": 64, "feature": "AbdominalCrampsDuringSex", "text": "Do you experience abdominal cramps during sex?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "ab_cramps_sex_q2" } ] },
+    { "id": "ab_cramps_sex_q2", "title": "Cramps During Sex Severity", "questions": [ { "id": 65, "feature": "AbdominalCrampsDuringSex", "text": "Rate the abdominal cramps during sex (1–10)", "type": "scale10" } ] },
+
+    { "id": "insomnia_q1", "title": "Insomnia / Sleeplessness", "questions": [ { "id": 66, "feature": "InsomniaOrSleeplessness", "text": "Do you experience insomnia or sleeplessness?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "acne_q1", "title": "Acne / Pimples", "questions": [ { "id": 67, "feature": "AcneOrPimples", "text": "Do you experience acne or pimples?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "loss_appetite_q1", "title": "Loss of Appetite", "questions": [ { "id": 68, "feature": "LossOfAppetite", "text": "Have you experienced loss of appetite?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "heavy_bleeding_q1", "title": "Heavy Menstrual Bleeding", "questions": [ { "id": 69, "feature": "HeavyMenstrualBleeding", "text": "Do you experience heavy menstrual bleeding?", "type": "radio", "options": ["No","Yes"] } ] },
+
+    { "id": "irregular_periods_q1", "title": "Irregular/Missed Periods", "questions": [ { "id": 70, "feature": "IrregularOrMissedPeriods", "text": "Are your periods irregular or do you miss periods?", "type": "radio", "options": ["No","Yes"] } ] }
   ]
 }
