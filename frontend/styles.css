@@ -102,3 +102,61 @@ input[type="range"] { width: 260px; vertical-align: middle; }
     margin-top: 24px;
   }
   
+/* --- SHAP Horizontal Bars --- */
+.shap-bars {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.bar-row {
+  display: grid;
+  grid-template-columns: 1fr 3fr auto;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0;
+}
+.bar-label {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bar-outer {
+  background: rgba(0,0,0,0.1);
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+}
+.bar {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+.bar-value {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+}
+
+/* --- SHAP Legend --- */
+.legend-text {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0.5rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.legend-pos,
+.legend-neg {
+  display: inline-block;
+  width: 14px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 6px;
+}
+.legend-pos {
+  background: #2563eb; /* blue for positive */
+}
+.legend-neg {
+  background: #ef4444; /* red for negative */
+}

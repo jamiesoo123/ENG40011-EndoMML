@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prediction Result</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Survey Results</title>
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
-  <main class="container">
-    <h1>Prediction Results</h1>
+  <main class="container card">
+    <h1>Survey Results</h1>
 
-    <!-- Prediction info -->
-    <div id="prediction" class="card">Loading result...</div>
+    <section id="summary" class="mb-3"></section>
 
-    <!-- SHAP bar chart -->
-    <div id="shap-bars" class="card" style="margin-top: 20px;">
-      <h2>Model Explainability (SHAP)</h2>
-      <p>Loading SHAP summary...</p>
-    </div>
+    <section id="explainBox" class="mt-3" hidden>
+      <h2>Top Contributors (SHAP)</h2>
+      <p class="legend-text">
+        <span class="legend-pos"></span> Positive influence on endometriosis prediction  
+        <span class="legend-neg"></span> Negative influence on endometriosis prediction
+      </p>
+      <div id="explainList"></div>
+    </section>
+    
 
-    <div style="margin-top: 20px; text-align: center;">
-      <a href="/survey" class="btn">Take Survey Again</a>
+    <section>
+      <h2>Selected Answers</h2>
+      <div id="answersList" class="answers"></div>
+    </section>
+
+    <div class="mt-4">
+      <button id="btnPDF" class="btn primary">Download PDF</button>
     </div>
   </main>
 
-  <script type="module" src="/static/js/result.js?v=3"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script type="module" src="/static/js/result.js?v=5"></script>
 </body>
 </html>

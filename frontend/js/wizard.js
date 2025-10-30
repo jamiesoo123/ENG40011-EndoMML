@@ -1,4 +1,4 @@
-// /frontend/js/wizard.js
+// /frontend/js/wizard.js  (auto-advance for Yes/No; Next button for sliders)
 
 function yesNoTo01(v) {
   const s = String(v).trim().toLowerCase();
@@ -11,79 +11,7 @@ function yesNoTo01(v) {
 function scale10To01(v) {
   const n = Number(v);
   if (!Number.isFinite(n)) return 0;
-  return n / 10; // maps 1..10 => 0.1..1.0
-}
-
-function renderQuestion(q, savedValue) {
-  const nameAttr = q.feature || q.name || `Q${q.id}`;
-  const block = document.createElement('div');
-  block.className = 'question';
-
-  const label = document.createElement('label');
-  label.textContent = q.text;
-  block.appendChild(label);
-
-  if (q.type === 'radio') {
-    const opts = q.options || ['No','Yes'];
-    opts.forEach((opt, i) => {
-      const id = `${nameAttr}_${i}`;
-      const wrap = document.createElement('div');
-      wrap.className = 'inline';
-
-      const input = document.createElement('input');
-      input.type = 'radio';
-      input.id = id;
-      input.name = nameAttr;
-      input.value = opt;
-      input.required = true;
-      if (savedValue !== undefined && String(savedValue) === String(opt)) {
-        input.checked = true;
-      }
-
-      const lab = document.createElement('label');
-      lab.setAttribute('for', id);
-      lab.textContent = opt;
-
-      wrap.appendChild(input);
-      wrap.appendChild(lab);
-      block.appendChild(wrap);
-    });
-  } else if (q.type === 'scale10') {
-    const wrap = document.createElement('div');
-    wrap.className = 'controls';
-
-    const input = document.createElement('input');
-    input.type = 'range';
-    input.name = nameAttr;
-    input.min = '1'; input.max = '10'; input.step = '1';
-    input.value = savedValue ? String(savedValue) : '5';
-
-    const readout = document.createElement('span');
-    readout.className = 'hint';
-    readout.textContent = `${input.value} / 10`;
-
-    input.addEventListener('input', () => {
-      readout.textContent = `${input.value} / 10`;
-    });
-
-    wrap.appendChild(input);
-    wrap.appendChild(readout);
-    block.appendChild(wrap);
-  }
-
-  if (q.hint) {
-    const hint = document.createElement('div');
-    hint.className = 'hint';
-    hint.textContent = q.hint;
-    block.appendChild(hint);
-  }
-  return block;
-}
-
-async function fetchJSON(url) {
-  const r = await fetch(url, { cache: 'no-store' });
-  if (!r.ok) throw new Error(`Failed to load ${url}`);
-  return r.json();
+  return n / 10;
 }
 
 function buildTypeMap(pages) {
@@ -99,14 +27,12 @@ function normalise(featuresRaw, typeByFeature) {
   const out = {};
   for (const [k, raw] of Object.entries(featuresRaw)) {
     const t = typeByFeature[k];
-    if (t === 'scale10') out[k] = scale10To01(raw);
-    else out[k] = yesNoTo01(raw);
+    out[k] = (t === 'scale10') ? scale10To01(raw) : yesNoTo01(raw);
   }
   return out;
 }
 
 async function startWizard() {
-  // get all of the data from the html file and store it as a constant
   const form = document.getElementById('surveyForm');
   const header = document.getElementById('pageHeader');
   const container = document.getElementById('questions');
@@ -116,21 +42,12 @@ async function startWizard() {
   const btnSubmit = document.getElementById('btnSubmit');
   const out = document.getElementById('resultBox');
 
-  // download button on the final page for the results pdf
-  const btnDownload = document.createElement('button');
-  btnDownload.textContent = 'Download PDF Report';
-  btnDownload.className = 'btn primary';
-  btnDownload.style.display = 'none';
-  btnDownload.addEventListener('click', generatePDF);
-  out.appendChild(btnDownload);
-
-  // bar at the top with % of completion
-  // 1) load spec (must exist at /data/questions.json)
+  // Load survey spec
   const spec = await fetch('/data/questions.json', { cache: 'no-store' }).then(r => r.json());
   const pages = spec.pages || [{ id: 'one', title: spec.title || 'Survey', questions: spec.questions || [] }];
   const typeByFeature = buildTypeMap(pages);
 
-  // 2) state
+  // State
   let pageIdx = 0;
   const answers = {};
 
@@ -139,106 +56,54 @@ async function startWizard() {
     bar.style.width = pct + '%';
   }
 
-  // clear container and then add current page questions, update bar and show nav buttons
-  function renderPage() {
-    container.innerHTML = '';
-    const page = pages[pageIdx];
-    header.innerHTML = `<h2>${page.title || ''}</h2>${page.description ? `<p class="hint">${page.description}</p>` : ''}`;
-    page.questions.forEach(q => {
-      const f = q.feature || q.name || `Q${q.id}`;
-      const node = renderQuestion(q, answers[f]);
-      container.appendChild(node);
-    });
-
-    btnBack.style.display  = (pageIdx === 0) ? 'none' : '';
-    btnNext.style.display  = (pageIdx === pages.length - 1) ? 'none' : '';
-    btnSubmit.style.display = (pageIdx === pages.length - 1) ? '' : 'none';
-
-    updateProgress();
-  }
-
+  // Read current page inputs into `answers`.
   function readCurrentPageInputs() {
     const fd = new FormData(form);
     pages[pageIdx].questions.forEach(q => {
       const f = q.feature || q.name || `Q${q.id}`;
-      if (fd.has(f)) answers[f] = fd.get(f);
+      if (fd.has(f)) {
+        answers[f] = fd.get(f);
+      } else if (q.type === 'scale10') {
+        // if slider not touched, still capture its current DOM value
+        const el = form.querySelector(`[name="${f}"]`);
+        if (el) answers[f] = el.value;
+      }
     });
   }
 
+  // Validate all questions on the current page have some value
   function validateCurrentPage() {
+    const fd = new FormData(form);
     for (const q of pages[pageIdx].questions) {
       const f = q.feature || q.name || `Q${q.id}`;
-      if (answers[f] === undefined || answers[f] === '') {
+      const hasValue =
+        (answers[f] !== undefined && answers[f] !== '') ||
+        (fd.has(f) && fd.get(f) !== '') ||
+        (q.type === 'scale10' && form.querySelector(`[name="${f}"]`));
+      if (!hasValue) {
         return { ok: false, message: `Please answer: "${q.text}"` };
       }
     }
     return { ok: true };
   }
 
-  function generatePDF() {
-    const data = sessionStorage.getItem('endo_result'); 
-    if (!data) { 
-      alert('No survey result found'); 
-      return; 
-    }
-
-    const { prob1, pred, answers } = JSON.parse(data);
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF;
-
-    doc.setFontSize(16);
-    doc.text("Endometriosis Symptom Survey", 10, 10)
-
-    doc.setFontSize(12);
-    doc.text(`Predicted Probability: ${(prob1 * 100).toFixed(1)}%`, 10, 20);
-    doc.text(`Model Decision: ${pred === 1 ? 'Possible Endometriosis' : 'Unlikely Endometriosis'}`, 10, 28);
-
-    doc.setFontSize(14);
-    doc.text('Patient Responses', 10, 38);
-
-    let y = 46;
-    for (const [q,a] of Object.entries(answers)) {
-      const text = `${q}: ${a}`;
-      const split = doc.splitTextToSize(text, 180);
-      
-      doc.text(split, 10, y);
-      y += split.length * 8;
-
-      if (y > 280) {
-        doc.addPage();
-        y = 10;
-      }
-    }
-    doc.save('Endometriosis_Survey.pdf');
-  }
-
-  btnBack.addEventListener('click', () => {
-    readCurrentPageInputs();
-    if (pageIdx > 0) { pageIdx--; renderPage(); }
-  });
-
-  btnNext.addEventListener('click', () => {
-    readCurrentPageInputs();
-    const v = validateCurrentPage();
-    if (!v.ok) { alert(v.message); return; }
-  
+  // Navigation logic for Yes/No branching + default next
+  function advanceFromCurrent(selectedValue) {
     const page = pages[pageIdx];
     const firstQ = page.questions[0];
-    const answer = answers[firstQ.feature];
-  
-    // if "No" and next page is only for rating, skip it
-    if (firstQ.type === "radio" && answer && answer.toLowerCase() === "no" && firstQ.next_if_yes) {
-      // find the index of the page after the "next_if_yes"
+
+    // If "No" and there is a next_if_yes (severity page), skip it
+    if (firstQ && String(selectedValue).toLowerCase() === 'no' && firstQ.next_if_yes) {
       const nextPageIdx = pages.findIndex(p => p.id === firstQ.next_if_yes);
       if (nextPageIdx !== -1 && nextPageIdx + 1 < pages.length) {
-        pageIdx = nextPageIdx + 1; // skip the severity page
+        pageIdx = nextPageIdx + 1;
         renderPage();
         return;
       }
     }
-  
-    // if "Yes" and we have next_if_yes go there directly
-    if (firstQ.type === "radio" && answer && answer.toLowerCase() === "yes" && firstQ.next_if_yes) {
+
+    // If "Yes" and next_if_yes exists, go directly there
+    if (firstQ && String(selectedValue).toLowerCase() === 'yes' && firstQ.next_if_yes) {
       const nextPageIdx = pages.findIndex(p => p.id === firstQ.next_if_yes);
       if (nextPageIdx !== -1) {
         pageIdx = nextPageIdx;
@@ -246,80 +111,151 @@ async function startWizard() {
         return;
       }
     }
-  
-    // otherwise normal next
+
+    // Otherwise, normal next
+    if (pageIdx < pages.length - 1) {
+      pageIdx++;
+      renderPage();
+    }
+  }
+
+  function renderQuestion(q) {
+    const nameAttr = q.feature || q.name || `Q${q.id}`;
+    const block = document.createElement('div');
+    block.className = 'question';
+
+    const label = document.createElement('label');
+    label.textContent = q.text;
+    block.appendChild(label);
+
+    if (q.type === 'radio') {
+      // Yes/No as buttons -> auto-advance
+      const opts = q.options || ['No', 'Yes'];
+      const btnRow = document.createElement('div');
+      btnRow.className = 'controls';
+
+      opts.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn';
+        btn.textContent = opt;
+        btn.addEventListener('click', () => {
+          answers[nameAttr] = opt;
+          advanceFromCurrent(opt);
+        });
+        btnRow.appendChild(btn);
+      });
+
+      block.appendChild(btnRow);
+
+    } else if (q.type === 'scale10') {
+      // Slider (no auto-advance)
+      const wrap = document.createElement('div');
+      wrap.className = 'controls';
+
+      const input = document.createElement('input');
+      input.type = 'range';
+      input.name = nameAttr;              // critical so FormData sees it
+      input.min = '1'; input.max = '10'; input.step = '1';
+      input.value = answers[nameAttr] ? String(answers[nameAttr]) : '5';
+
+      const readout = document.createElement('span');
+      readout.className = 'hint';
+      readout.textContent = `${input.value} / 10`;
+
+      input.addEventListener('input', () => {
+        readout.textContent = `${input.value} / 10`;
+        answers[nameAttr] = input.value;  // keep answers updated as they slide
+      });
+
+      wrap.appendChild(input);
+      wrap.appendChild(readout);
+      block.appendChild(wrap);
+    }
+
+    if (q.hint) {
+      const hint = document.createElement('div');
+      hint.className = 'hint';
+      hint.textContent = q.hint;
+      block.appendChild(hint);
+    }
+    return block;
+  }
+
+  function renderPage() {
+    container.innerHTML = '';
+    const page = pages[pageIdx];
+    header.innerHTML = `<h2>${page.title || ''}</h2>${page.description ? `<p class="hint">${page.description}</p>` : ''}`;
+
+    page.questions.forEach(q => {
+      const node = renderQuestion(q);
+      container.appendChild(node);
+    });
+
+    const hasScale = page.questions.some(q => q.type === 'scale10');
+    btnBack.style.display = (pageIdx === 0) ? 'none' : '';
+    btnNext.style.display = (hasScale && pageIdx < pages.length - 1) ? '' : 'none';
+    btnSubmit.style.display = (pageIdx === pages.length - 1) ? '' : 'none';
+
+    updateProgress();
+  }
+
+  // Back button
+  btnBack.addEventListener('click', () => {
+    if (pageIdx > 0) { pageIdx--; renderPage(); }
+  });
+
+  // NEXT button (used on slider pages)
+  btnNext.addEventListener('click', () => {
+    readCurrentPageInputs();
+    const v = validateCurrentPage();
+    if (!v.ok) { alert(v.message); return; }
     if (pageIdx < pages.length - 1) {
       pageIdx++;
       renderPage();
     }
   });
 
+  // Submit -> call /predict, save, redirect to /result
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    readCurrentPageInputs();
-  
+    readCurrentPageInputs(); // be sure last page values are captured
+
     const features = normalise(answers, typeByFeature);
-  
     out.hidden = false;
     out.textContent = 'Loading…';
-  
+
     try {
-      console.log('[wizard] POST /predict', features);
       const res = await fetch('/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ features })
       });
-  
+
       if (!res.ok) {
         const txt = await res.text().catch(() => '');
         console.error('[wizard] /predict failed', res.status, txt);
         out.innerHTML = `<span style="color:#b00">API error ${res.status}</span>`;
         return;
       }
-  
-      const json = await res.json();
-      console.log('[wizard] /predict ok', json);
-  
-      // Save for the results page
-      sessionStorage.setItem('endo_result', JSON.stringify(json));
-      sessionStorage.setItem('endo_features', JSON.stringify(features));
-  
-      // Optional inline flash
-      const pct = (json.prob1 * 100).toFixed(1);
-      out.innerHTML = `
-        <div><strong>Predicted Probability:</strong> ${pct}%</div>
-        <div><strong>Predicted Label:</strong> ${json.pred}</div>
-      `;
 
-      sessionStorage.setItem('endo_result', JSON.stringify({ ...json, answers })); // stores the answers and pred/% in sessionData
-      
-      btnDownload.style.display = 'inline-block'; // only appear once the submit button has been pressed
-  
-      // Strong redirect
-      /* removing redirect for pfd download
-      window.location.replace('/result');
-      // Failsafe (in case of popup blockers or odd environments)
-      setTimeout(() => { if (location.pathname !== '/result') location.href = '/result'; }, 100);
-      */
-  
+      const json = await res.json();
+      sessionStorage.setItem('endo_result', JSON.stringify({ ...json, answers }));
+      sessionStorage.setItem('endo_features', JSON.stringify(features));
+      window.location.replace('/result');   // or '/result.html' if static file
+
     } catch (err) {
       console.error('[wizard] submit error', err);
       out.innerHTML = `<span style="color:#b00">Error: ${err.message}</span>`;
     }
   });
 
-  form.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault(); // stop form submission
-      // emulate "Next" button click if it's visible
-      if (!btnNext.hidden) {
-        btnNext.click();
-      }
-    }
+  // Prevent Enter from submitting (we control navigation)
+  form.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') e.preventDefault();
   });
+
   renderPage();
 }
 
-// auto-run on survey.html
 startWizard();
