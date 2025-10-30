@@ -1,7 +1,6 @@
 {
   "title": "Endometriosis Symptom Survey",
   "pages": [
-    { "id": "pelvic_pain_q1", "title": "Pelvic Pain", "questions": [ { "id": 1, "feature": "PelvicPain", "text": "Do you experience pelvic pain?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "pelvic_pain_q2" } ] },
-    { "id": "pelvic_pain_q2", "title": "Pelvic Pain Severity", "questions": [ { "id": 2, "feature": "PelvicPain", "text": "Rate your pelvic pain (1–10)", "type": "scale10" } ] }
+    { "id": "pelvic_pain_q1", "title": "Pelvic Pain", "questions": [ { "id": 1, "feature": "PelvicPain", "text": "Do you experience pelvic pain?", "type": "radio", "options": ["No","Yes"], "next_if_yes": "pelvic_pain_q2" } ] }
   ]
 }  
