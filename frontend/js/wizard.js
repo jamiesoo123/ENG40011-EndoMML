@@ -126,7 +126,7 @@ async function startWizard() {
 
   // bar at the top with % of completion
   // 1) load spec (must exist at /data/questions.json)
-  const spec = await fetch('/data/questions.json', { cache: 'no-store' }).then(r => r.json());
+  const spec = await fetch('/data/question.json', { cache: 'no-store' }).then(r => r.json());
   const pages = spec.pages || [{ id: 'one', title: spec.title || 'Survey', questions: spec.questions || [] }];
   const typeByFeature = buildTypeMap(pages);
 
