@@ -1,18 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Endometriosis Predictor</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="/static/styles.css" />
-</head>
-<body>
-  <main class="container">
-    <h1>Welcome</h1>
-    <div class="card">
-      <p>This tool collects symptom information and uses a trained ML model to estimate the likelihood of endometriosis.</p>
-      <a class="btn primary" href="/survey">Start Survey</a>
-    </div>
-  </main>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Endometriosis Predictor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- <link rel="stylesheet" href="/static/styles.css" />  change back when committing, this was just for me to see my changes for css locally -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <a href="#mainContent" class="skip-link">Skip to main content</a>
+    
+    <main id="mainContent" class="container" role="main">
+      <div class="card">
+        <header>
+          <h1>Endometriosis Predictor</h1>
+          <p class="subtext">A tool to estimate the likelihood of endometriosis based on symptom reporting.</p>
+        </header>
+        <p>This tool collects symptom information and uses a trained ML model to estimate the likelihood of endometriosis. <strong>It does not replace a medical diagnosis.</strong></p>
+        <a class="btn primary" href="/survey">Start Survey</a>
+      </div>
+
+      <div class="card">
+        <h2>About Endometriosis</h2>
+        <p>Endometriosis affects millions of women worldwide and is often underdiagnosed. Early symptom awareness can help you seek timely medical advice.</p>
+        <ul>
+          <li>Chronic pelvic pain</li>
+          <li>Fatigue and hormonal irregularities</li>
+          <li>Irregular menstrual cycles</li>
+        </ul>
+        <p>Learn more from trusted sources: <a href="https://www.who.int/news-room/fact-sheets/detail/endometriosis" target="_blank" rel="noopener">WHO Fact Sheet</a></p>
+      </div>
+    </main>
+  </body>
+
+  <footer class="container card">
+    <p>&copy; 2025 Endometriosis Awareness Project</p>
+  </footer>
 </html>

@@ -4,13 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Survey Results</title>
-  <link rel="stylesheet" href="/static/styles.css" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="container card">
+  <a href="#mainContent" class="skip-link">Skip to main content</a>
+  <main id="mainContent" role="main" class="container card">
     <h1>Survey Results</h1>
+    <p class="subtext">The following output is based on your survey response. This is a risk assessment only and not a medical diagnosis.</p>
 
-    <section id="summary" class="mb-3"></section>
+    <section id="summary" class="mb-3" aria-live="polite"></section>
 
     <section id="explainBox" class="mt-3" hidden>
       <h2>Top Contributors (SHAP)</h2>

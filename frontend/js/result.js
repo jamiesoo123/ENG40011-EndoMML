@@ -85,6 +85,11 @@ function renderBars(container, contributors, opts = {}) {
     val.className = 'bar-value';
     val.textContent = item.shap.toFixed(4);
 
+    bar.setAttribute('role', 'progressbar');
+    bar.setAttribute('aria-valuemin', 0);
+    bar.setAttribute('aria-valuemax', 100);
+    bar.setAttribute('aria-valuenow', shap_values);
+
     barOuter.appendChild(bar);
     li.appendChild(label);
     li.appendChild(barOuter);
@@ -265,6 +270,8 @@ async function render() {
     summary.innerHTML = `<div class="hint" style="color:#b00">No result in session. Please complete the survey.</div>`;
     return;
   }
+
+  summary.focus(); // results summary gets focus for screen readers
 
   // Summary
   renderSummary(summary, result);

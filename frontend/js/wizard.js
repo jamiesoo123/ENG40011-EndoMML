@@ -186,6 +186,7 @@ async function startWizard() {
     container.innerHTML = '';
     const page = pages[pageIdx];
     header.innerHTML = `<h2>${page.title || ''}</h2>${page.description ? `<p class="hint">${page.description}</p>` : ''}`;
+    document.getElementById('pageHeader').focus(); // screen reader usability
 
     page.questions.forEach(q => {
       const node = renderQuestion(q);
