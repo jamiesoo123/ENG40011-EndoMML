@@ -233,10 +233,10 @@ function renderSummary(container, result) {
   // Fine print with hover tooltip
   const note = makeEl('div', 'disclaimer');
   note.innerHTML = `
-    <span class="info" title="This is an AI-generated risk estimate from your responses, not a diagnosis.">
+    <span class="info" title="This is an AI-generated risk assessment only, not a medical diagnosis.">
       ⓘ
     </span>
-    <span class="muted">This is an AI-generated risk estimate, not a diagnosis.</span>
+    <span class="muted">This is an AI-generated risk assessment only, not a medical diagnosis.</span>
   `;
   right.appendChild(note);
 
