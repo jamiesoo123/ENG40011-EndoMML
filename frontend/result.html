@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Survey Results</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <main class="container card">
+    <h1>Survey Results</h1>
+
+    <section id="summary" class="mb-3"></section>
+
+    <section id="explainBox" class="mt-3" hidden>
+      <h2>Top Contributors (SHAP)</h2>
+      <p class="legend legend-stacked">
+        <span class="legend-item">
+          <span class="legend-swatch legend-pos"></span>
+          <span>Positive influence on predicted risk</span>
+        </span>
+        <span class="legend-item">
+          <span class="legend-swatch legend-neg"></span>
+          <span>Negative influence on predicted risk</span>
+        </span>
+      </p>
+      <div id="explainList"></div>
+    </section>
+    
+
+    <section>
+      <h2>Selected Answers</h2>
+      <div id="answersList" class="answers"></div>
+    </section>
+
+    <div class="mt-4">
+      <button id="btnPDF" class="btn primary">Download PDF</button>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script type="module" src="/static/js/result.js?v=5"></script>
+</body>
+</html>

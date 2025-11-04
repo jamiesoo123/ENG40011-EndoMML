@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Endometriosis Survey</title>
+  <link rel="stylesheet" href="static/styles.css" />
+</head>
+
+<body>
+  <a href="#mainContent" class="skip-link">Skip to main content</a>
+
+  <main class="container" id="mainContent" role="main">
+    <h1>Endometriosis Symptom Survey</h1>
+    <p class="subtext">Please answer the following questions honestly. This tool is for risk awareness only and is not a medical diagnosis</p>
+
+    <div class="progress" aria-label="Survey progress"><div id="progressBar" class="bar"></div></div>
+
+    <form id="surveyForm" class="card">
+      <div id="surveyInstructions" class="hint">Use the slider to select your answer for each question (1 = Never, 10 = Always).</div>
+      <div id="pageHeader" class="page-header"></div>
+      <div id="questions" role="region" aria-live="polite"></div>
+
+      <div class="wizard-nav">
+        <button type="button" id="btnBack"  class="btn secondary">Back</button>
+        <button type="button" id="btnNext"  class="btn">Next</button>
+        <button type="submit" id="btnSubmit" class="btn primary" style="display:none">Submit</button>
+      </div>
+    </form>
+
+    <div id="resultBox" class="result card" hidden></div>
+  </main>
+
+  <footer class="container card">
+    <p>&copy; 2025 Endometriosis Awareness Project</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script type="module" src="/static/js/wizard.js"></script>
+</body>
+</html>
