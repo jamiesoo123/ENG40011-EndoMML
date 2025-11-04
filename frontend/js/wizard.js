@@ -147,6 +147,7 @@ async function startWizard() {
         btn.type = 'button';
         btn.className = 'btn';
         btn.textContent = opt;
+        btn.tabIndex = 0;
         btn.addEventListener('click', () => {
           answers[nameAttr] = opt;
           advanceFromCurrent(opt);
@@ -212,6 +213,9 @@ async function startWizard() {
     btnSubmit.style.display = (pageIdx === pages.length - 1) ? '' : 'none';
 
     updateProgress();
+
+    const focusable = container.querySelector('button, input, [tabindex]');
+    if (focusable) focusable.focus();
   }
 
   // Back button
@@ -266,7 +270,11 @@ async function startWizard() {
 
   // Prevent Enter from submitting (we control navigation)
   form.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') e.preventDefault();
+    const active = document.activeElement;
+    if (e.key === 'Enter' && active.tagName !== 'BUTTON' && active.type !== 'range') {
+      e.preventDefault();
+      btn.click();
+    } 
   });
 
   renderPage();
